@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>윤슬의 정원 매니저 v8</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#2e7d55">
+</head>
+<body>
+  <header>
+    <div class="title">🌿 윤슬의 정원 매니저 v8</div>
+    <div class="subtitle">정남향 베란다 · 소나무 필터광 · 개인 레시피 포함</div>
+  </header>
+
+  <nav class="tabs">
+    <button data-page="dashboard" class="tab active">홈</button>
+    <button data-page="plants" class="tab">식물관리</button>
+    <button data-page="fert" class="tab">영양제기록</button>
+    <button data-page="repot" class="tab">분갈이계산기</button>
+    <button data-page="soil" class="tab">흙배합레시피</button>
+    <button data-page="light" class="tab">식물등</button>
+    <button data-page="data" class="tab">백업/복원</button>
+  </nav>
+
+  <main>
+    <!-- DASHBOARD: top3 quick access, counts -->
+    <section id="dashboard" class="page">
+      <div class="card">
+        <h3>빠른관리 (Top 3)</h3>
+        <div id="quickCards" class="horizontal"></div>
+      </div>
+
+      <div class="card">
+        <h3>정원 통계</h3>
+        <div id="stats"></div>
+      </div>
+
+      <div class="card">
+        <h3>오늘 권장 (영양제/가지치기)</h3>
+        <div id="todayRecommendations">- 없음 -</div>
+      </div>
+    </section>
+
+    <!-- PLANTS: add/list/search/delete/grouping/batch add -->
+    <section id="plants" class="page hidden">
+      <div class="card">
+        <h3>식물 추가 (한줄에 한개 또는 쉼표로 여러개 입력)</h3>
+        <div class="grid-2">
+          <div>
+            <label>카테고리</label>
+            <select id="newCategory"></select>
+          </div>
+          <div>
+            <label>이름 (예: 사랑초 쿠페리1)</label>
+            <input id="newName" placeholder="식물 이름을 입력하세요">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label>여러개 한 번에 추가 (각 줄 또는 쉼표)</label>
+            <textarea id="bulkNames" placeholder="스카푸1, 스카푸2 또는 줄바꿈으로 입력"></textarea>
+          </div>
+          <div>
+            <label>파종/삽목 개체수 입력 (파종/삽목 전용)</label>
+            <input id="seedCount" type="number" min="0" placeholder="예: 12">
+          </div>
+        </div>
+        <div class="actions">
+          <button id="addBtn" class="primary">추가</button>
+          <button id="bulkAddBtn">한 번에 추가</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>식물 목록 / 검색</h3>
+        <input id="searchPlant" placeholder="이름 검색(부분일치)">
+
+        <div id="categoryList" class="category-list"></div>
+      </div>
+    </section>
+
+    <!-- FERT: log -->
+    <section id="fert" class="page hidden">
+      <div class="card">
+        <h3>영양제 기록 (기록 시 자동으로 권장 재투입일 계산)</h3>
+
+        <label>식물 선택</label>
+        <select id="fertPlant"></select>
+
+        <label>영양제 선택 (다중 선택 가능)</label>
+        <div id="fertOptions" class="multi"></div>
+
+        <label>메모</label>
+        <input id="fertMemo" placeholder="예: 9호 슬릿분 3/1 배수층 만들고...">
+
+        <div class="actions">
+          <button id="saveFert" class="primary">기록 저장</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>최근 영양제 기록</h3>
+        <div id="fertLogs"></div>
+      </div>
+    </section>
+
+    <!-- REPOT -->
+    <section id="repot" class="page hidden">
+      <div class="card">
+        <h3>분갈이 계산기</h3>
+
+        <label>식물 종류 (레시피 기준)</label>
+        <select id="repotPlant"></select>
+
+        <label>화분 크기</label>
+        <select id="repotPot">
+          <option value="0.3">5호 (0.3 L)</option>
+          <option value="0.8">9호 (0.8 L)</option>
+          <option value="1.0">10호 (1.0 L)</option>
+          <option value="2.5">15호 (2.5 L)</option>
+        </select>
+
+        <label>개수</label>
+        <input id="repotCount" type="number" min="1" value="1">
+
+        <div class="actions">
+          <button id="calcRepot" class="primary">계산하기</button>
+          <button id="saveRepotRecord">분갈이 기록 저장</button>
+        </div>
+
+        <div id="repotResult" class="result"></div>
+      </div>
+
+      <div class="card">
+        <h3>최근 분갈이 기록</h3>
+        <div id="repotLogs"></div>
+      </div>
+    </section>
+
+    <!-- SOIL -->
+    <section id="soil" class="page hidden">
+      <div class="card">
+        <h3>흙 배합 레시피 (1L 기준)</h3>
+        <label>식물 선택</label>
+        <select id="soilPlant"></select>
+        <div class="actions"><button id="showRecipe" class="primary">레시피 보기</button></div>
+        <div id="recipeResult" class="result"></div>
+      </div>
+    </section>
+
+    <!-- LIGHT -->
+    <section id="light" class="page hidden">
+      <div class="card">
+        <h3>식물등 추천 (계절/환경 반영)</h3>
+        <div id="lightInfo" class="result"></div>
+        <div class="hint">환경: 정남향 베란다 · 소나무 차광 (사용 설명 참고)</div>
+      </div>
+    </section>
+
+    <!-- DATA -->
+    <section id="data" class="page hidden">
+      <div class="card">
+        <h3>백업 / 복원</h3>
+        <div class="grid-2">
+          <div>
+            <button id="exportBtn" class="primary">데이터 내보내기 (JSON)</button>
+          </div>
+          <div>
+            <input id="importFile" type="file" accept=".json">
+            <button id="importBtn">데이터 불러오기</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <button id="resetBtn">앱 데이터 초기화 (주의)</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>© 윤슬의 정원 · v8 Ultimate</small>
+  </footer>
+
+<script src="app.js"></script>
+</body>
+</html>

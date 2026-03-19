@@ -1,105 +1,148 @@
-const SOIL_DATA={
+const STORAGE="yoonseul_garden_pro";
 
-사랑초:{
-soil:{VanEgmond:650,산야초:250,훈탄:100},
-tip:"분갈이 후 3일 반그늘"
-},
+let data=JSON.parse(localStorage.getItem(STORAGE)) || {
 
-수국:{
-soil:{VanEgmond:600,산야초:300,훈탄:100},
-tip:"분갈이 후 5일 차광"
-},
-
-베고니아:{
-soil:{VanEgmond:500,산야초:300,질석:100,훈탄:100},
-tip:"통풍 중요 / 과습 주의"
-},
-
-스카푸:{
-soil:{VanEgmond:450,산야초:350,질석:100,훈탄:100},
-tip:"건조한 환경 선호"
-},
-
-미니신닌기아:{
-soil:{VanEgmond:400,산야초:350,질석:150,훈탄:100},
-tip:"구근 손상 주의"
-}
+plants:[],
+logs:[]
 
 };
 
-const FERT_INTERVAL={
+function save(){
 
-아그로믹파워:90,
-멀티코트:180,
-오스모코트:120,
-골드아이언:45,
-벅스킬:30,
-토탈싹:30
-
-};
-
-function calcSoil(){
-
-const plant=document.getElementById("plant").value;
-
-const pot=parseFloat(document.getElementById("pot").value);
-
-if(!pot){
-
-alert("화분 용량 입력");
-
-return;
+localStorage.setItem(STORAGE,JSON.stringify(data));
 
 }
 
-const data=SOIL_DATA[plant];
+function showPage(id){
 
-let html="<b>흙 배합</b><br>";
+document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
 
-Object.entries(data.soil).forEach(([k,v])=>{
+document.getElementById(id).classList.remove("hidden");
 
-html+=`${k} : ${v*pot} ml<br>`;
+}
+
+function addPlant(){
+
+const name=document.getElementById("plantName").value;
+
+const type=document.getElementById("plantType").value;
+
+if(!name)return;
+
+data.plants.push({name,type});
+
+save();
+
+renderPlants();
+
+}
+
+function renderPlants(){
+
+const list=document.getElementById("plantList");
+
+list.innerHTML="";
+
+data.plants.forEach(p=>{
+
+const div=document.createElement("div");
+
+div.innerHTML=p.type+" - "+p.name;
+
+list.appendChild(div);
 
 });
 
-html+=`<br><b>분갈이 후 관리</b><br>${data.tip}`;
+updatePlantSelect();
+
+}
+
+function updatePlantSelect(){
+
+const sel=document.getElementById("logPlant");
+
+sel.innerHTML="";
+
+data.plants.forEach(p=>{
+
+const o=document.createElement("option");
+
+o.value=p.name;
+
+o.textContent=p.name;
+
+sel.appendChild(o);
+
+});
+
+}
+
+function saveLog(){
+
+const plant=document.getElementById("logPlant").value;
+
+const type=document.getElementById("logType").value;
+
+const memo=document.getElementById("logMemo").value;
+
+const date=new Date().toISOString().slice(0,10);
+
+data.logs.push({plant,type,memo,date});
+
+save();
+
+renderLogs();
+
+}
+
+function renderLogs(){
+
+const list=document.getElementById("logList");
+
+list.innerHTML="";
+
+data.logs.slice().reverse().forEach(l=>{
+
+const div=document.createElement("div");
+
+div.innerHTML=l.date+" | "+l.plant+" | "+l.type;
+
+list.appendChild(div);
+
+});
+
+}
+
+function calcSoil(){
+
+const plant=document.getElementById("soilPlant").value;
+
+const size=parseFloat(document.getElementById("potSize").value);
+
+const recipe={
+
+사랑초:{VanEgmond:650,산야초:250,훈탄:100},
+
+수국:{VanEgmond:600,산야초:300,훈탄:100},
+
+베고니아:{VanEgmond:500,산야초:300,질석:100,훈탄:100}
+
+};
+
+const soil=recipe[plant];
+
+let html="";
+
+Object.entries(soil).forEach(([k,v])=>{
+
+html+=k+" : "+(v*size)+" ml<br>";
+
+});
 
 document.getElementById("soilResult").innerHTML=html;
 
 }
 
-function calcFert(){
+renderPlants();
 
-const fert=document.getElementById("fert").value;
-
-const days=FERT_INTERVAL[fert];
-
-const date=new Date();
-
-date.setDate(date.getDate()+days);
-
-const next=date.toISOString().slice(0,10);
-
-document.getElementById("fertResult").innerHTML=
-
-`다음 사용일 : ${next}`;
-
-}
-
-function showPrune(){
-
-const tips=[
-
-"가지치기는 생장기 초반",
-"꽃이 끝난 후 전정하면 꽃수 증가",
-"분갈이 후 2주 뒤 영양제 시작",
-"토양살충제는 30일 간격 사용",
-"벅스킬은 4주 간격"
-
-];
-
-const tip=tips[Math.floor(Math.random()*tips.length)];
-
-document.getElementById("tipResult").innerHTML=tip;
-
-}
+renderLogs();

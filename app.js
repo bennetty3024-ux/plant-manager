@@ -1,55 +1,68 @@
-const STORAGE="yoonseul_garden_v11";
+const SOIL_DATA={
 
-const FERT_SCHEDULE={
+사랑초:{
+soil:{VanEgmond:650,산야초:250,훈탄:100},
+tip:"분갈이 후 3일 반그늘"
+},
+
+수국:{
+soil:{VanEgmond:600,산야초:300,훈탄:100},
+tip:"분갈이 후 5일 차광"
+},
+
+베고니아:{
+soil:{VanEgmond:500,산야초:300,질석:100,훈탄:100},
+tip:"통풍 중요 / 과습 주의"
+},
+
+스카푸:{
+soil:{VanEgmond:450,산야초:350,질석:100,훈탄:100},
+tip:"건조한 환경 선호"
+},
+
+미니신닌기아:{
+soil:{VanEgmond:400,산야초:350,질석:150,훈탄:100},
+tip:"구근 손상 주의"
+}
+
+};
+
+const FERT_INTERVAL={
+
 아그로믹파워:90,
 멀티코트:180,
 오스모코트:120,
 골드아이언:45,
 벅스킬:30,
 토탈싹:30
-};
-
-const SOIL={
-
-사랑초:{
-soil:{VanEgmond:650,산야초:250,훈탄:100},
-after:"분갈이후 3일 차광 / 물은 소량",
-prune:"꽃대 마르면 제거"
-},
-
-수국:{
-soil:{VanEgmond:600,산야초:300,훈탄:100},
-after:"5일 반그늘 관리",
-prune:"개화 후 바로 전정"
-},
-
-베고니아:{
-soil:{VanEgmond:500,산야초:300,질석:100,훈탄:100},
-after:"통풍 좋은곳",
-prune:"웃자란 줄기 컷팅"
-}
 
 };
 
 function calcSoil(){
 
-const plant=document.getElementById("soilPlant").value;
-const size=parseFloat(document.getElementById("potSize").value);
+const plant=document.getElementById("plant").value;
 
-const recipe=SOIL[plant];
+const pot=parseFloat(document.getElementById("pot").value);
+
+if(!pot){
+
+alert("화분 용량 입력");
+
+return;
+
+}
+
+const data=SOIL_DATA[plant];
 
 let html="<b>흙 배합</b><br>";
 
-Object.entries(recipe.soil).forEach(([k,v])=>{
+Object.entries(data.soil).forEach(([k,v])=>{
 
-const amount=v*size;
-
-html+=`${k} : ${amount} ml<br>`;
+html+=`${k} : ${v*pot} ml<br>`;
 
 });
 
-html+=`<br><b>분갈이 후 관리</b><br>${recipe.after}`;
-html+=`<br><b>가지치기</b><br>${recipe.prune}`;
+html+=`<br><b>분갈이 후 관리</b><br>${data.tip}`;
 
 document.getElementById("soilResult").innerHTML=html;
 
@@ -57,17 +70,36 @@ document.getElementById("soilResult").innerHTML=html;
 
 function calcFert(){
 
-const fert=document.getElementById("fertType").value;
+const fert=document.getElementById("fert").value;
 
-const days=FERT_SCHEDULE[fert];
+const days=FERT_INTERVAL[fert];
 
-const today=new Date();
+const date=new Date();
 
-today.setDate(today.getDate()+days);
+date.setDate(date.getDate()+days);
 
-const next=today.toISOString().slice(0,10);
+const next=date.toISOString().slice(0,10);
 
 document.getElementById("fertResult").innerHTML=
+
 `다음 사용일 : ${next}`;
+
+}
+
+function showPrune(){
+
+const tips=[
+
+"가지치기는 생장기 초반",
+"꽃이 끝난 후 전정하면 꽃수 증가",
+"분갈이 후 2주 뒤 영양제 시작",
+"토양살충제는 30일 간격 사용",
+"벅스킬은 4주 간격"
+
+];
+
+const tip=tips[Math.floor(Math.random()*tips.length)];
+
+document.getElementById("tipResult").innerHTML=tip;
 
 }

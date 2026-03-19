@@ -1,4 +1,4 @@
-const CACHE="yoonseul-garden-v13";
+const CACHE="yoonseul-pro";
 
 self.addEventListener("install",e=>{
 
@@ -13,11 +13,11 @@ return cache.addAll([
 "./style.css",
 "./app.js"
 
-]);
+])
 
 })
 
-);
+)
 
 });
 
@@ -27,6 +27,6 @@ e.respondWith(
 
 caches.match(e.request).then(r=>r||fetch(e.request))
 
-);
+)
 
 });

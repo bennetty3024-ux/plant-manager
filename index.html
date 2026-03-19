@@ -3,9 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>윤슬 정원 매니저</title>
+<title>윤슬 정원 매니저 PRO</title>
 
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
@@ -17,82 +17,120 @@
 <header>
 
 <h1>🌿 윤슬 정원 매니저</h1>
-<p>분갈이 · 영양제 · 가지치기 관리</p>
+<p>식물관리 · 분갈이 · 영양제</p>
 
 </header>
 
+<nav>
+
+<button onclick="showPage('dashboard')">대시보드</button>
+<button onclick="showPage('plants')">식물등록</button>
+<button onclick="showPage('log')">작업기록</button>
+<button onclick="showPage('soil')">분갈이계산</button>
+<button onclick="showPage('schedule')">관리일정</button>
+
+</nav>
+
 <main>
 
-<div class="grid">
+<section id="dashboard" class="page">
 
-<section class="card">
+<h2>오늘 관리</h2>
 
-<h2>🪴 분갈이 흙 계산</h2>
+<div id="todayTasks"></div>
 
-<select id="plant">
+</section>
 
-<option value="사랑초">사랑초</option>
-<option value="수국">수국</option>
-<option value="베고니아">베고니아</option>
-<option value="스카푸">스카푸</option>
-<option value="미니신닌기아">미니신닌기아</option>
+<section id="plants" class="page hidden">
+
+<h2>식물 등록</h2>
+
+<input id="plantName" placeholder="식물 이름">
+
+<select id="plantType">
+
+<option>사랑초</option>
+<option>수국</option>
+<option>베고니아</option>
+<option>미니신닌기아</option>
+<option>구근류</option>
+<option>팬지</option>
 
 </select>
 
-<input id="pot" placeholder="화분 용량 (L)">
+<button onclick="addPlant()">식물 추가</button>
 
-<button onclick="calcSoil()">흙 계산하기</button>
+<div id="plantList"></div>
+
+</section>
+
+<section id="log" class="page hidden">
+
+<h2>작업 기록</h2>
+
+<select id="logPlant"></select>
+
+<select id="logType">
+
+<option>분갈이</option>
+<option>정식</option>
+<option>파종</option>
+<option>가지치기</option>
+<option>영양제</option>
+<option>토양살충제</option>
+<option>벅스킬</option>
+
+</select>
+
+<textarea id="logMemo" placeholder="메모"></textarea>
+
+<button onclick="saveLog()">기록 저장</button>
+
+<div id="logList"></div>
+
+</section>
+
+<section id="soil" class="page hidden">
+
+<h2>분갈이 흙 계산</h2>
+
+<select id="soilPlant">
+
+<option>사랑초</option>
+<option>수국</option>
+<option>베고니아</option>
+
+</select>
+
+<input id="potSize" placeholder="화분 용량 L">
+
+<button onclick="calcSoil()">계산</button>
 
 <div id="soilResult"></div>
 
 </section>
 
-<section class="card">
+<section id="schedule" class="page hidden">
 
-<h2>🌱 영양제 재사용</h2>
+<h2>관리 일정</h2>
 
-<select id="fert">
-
-<option>아그로믹파워</option>
-<option>멀티코트</option>
-<option>오스모코트</option>
-<option>골드아이언</option>
-<option>벅스킬</option>
-<option>토탈싹</option>
-
-</select>
-
-<button onclick="calcFert()">다음 사용일</button>
-
-<div id="fertResult"></div>
+<div id="scheduleList"></div>
 
 </section>
-
-<section class="card">
-
-<h2>✂️ 가지치기 팁</h2>
-
-<button onclick="showPrune()">관리 팁 보기</button>
-
-<div id="tipResult"></div>
-
-</section>
-
-</div>
 
 </main>
 
 <footer>
 
-윤슬 Garden Manager v13
+윤슬 Garden Manager PRO
 
 </footer>
 
 <script src="app.js"></script>
 
 <script>
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('service-worker.js');
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js')
 }
 </script>
 

@@ -6,19 +6,39 @@ margin:0;
 
 background:#f3f6f5;
 
-color:#333;
-
 }
 
 header{
 
-background:linear-gradient(135deg,#2e7d55,#4caf7a);
+background:#2e7d55;
 
 color:white;
 
-padding:25px;
+padding:20px;
 
 text-align:center;
+
+}
+
+nav{
+
+display:flex;
+
+overflow:auto;
+
+background:#fff;
+
+}
+
+nav button{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+background:#eee;
 
 }
 
@@ -28,29 +48,33 @@ padding:20px;
 
 }
 
-.grid{
-
-display:grid;
-
-gap:20px;
-
-}
-
 .card{
 
 background:white;
 
-padding:20px;
+padding:15px;
 
-border-radius:15px;
+border-radius:10px;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.05);
+margin-bottom:15px;
 
 }
 
-h2{
+.hidden{
 
-margin-top:0;
+display:none;
+
+}
+
+input,select,textarea{
+
+width:100%;
+
+padding:10px;
+
+margin-top:8px;
+
+margin-bottom:10px;
 
 }
 
@@ -62,46 +86,6 @@ color:white;
 
 border:none;
 
-padding:12px;
-
-border-radius:10px;
-
-cursor:pointer;
-
-width:100%;
-
-margin-top:10px;
-
-}
-
-button:hover{
-
-background:#256747;
-
-}
-
-input,select{
-
-width:100%;
-
-padding:10px;
-
-margin-top:8px;
-
-margin-bottom:10px;
-
-border-radius:8px;
-
-border:1px solid #ddd;
-
-}
-
-#soilResult,#fertResult,#tipResult{
-
-margin-top:10px;
-
-background:#f0faf4;
-
 padding:10px;
 
 border-radius:8px;
@@ -112,18 +96,8 @@ footer{
 
 text-align:center;
 
-padding:15px;
+padding:10px;
 
 color:#777;
-
-}
-
-@media (min-width:700px){
-
-.grid{
-
-grid-template-columns:1fr 1fr;
-
-}
 
 }

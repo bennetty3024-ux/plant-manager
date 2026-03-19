@@ -1,68 +1,129 @@
-:root{
-  --primary:#2e7d55;
-  --muted:#f4f6f5;
-  --card:#ffffff;
-  --accent:#e8f6ee;
-}
-
-*{box-sizing:border-box}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-  margin:0;
-  background:var(--muted);
-  color:#222;
+
+font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR";
+
+margin:0;
+
+background:#f3f6f5;
+
+color:#333;
+
 }
+
 header{
-  background:var(--primary);
-  color:#fff;
-  padding:14px 16px;
-}
-header .title{font-size:20px;font-weight:700}
-header .subtitle{font-size:12px;opacity:0.9;margin-top:6px}
 
-.tabs{
-  display:flex;
-  gap:6px;
-  padding:8px;
-  background:#fff;
-  overflow:auto;
+background:linear-gradient(135deg,#2e7d55,#4caf7a);
+
+color:white;
+
+padding:25px;
+
+text-align:center;
+
 }
 
-.tab{
-  padding:8px 12px;
-  border-radius:10px;
-  border:0;
-  background:#eee;
+main{
+
+padding:20px;
+
 }
 
-.tab.active{background:linear-gradient(90deg,#f7fffa,#e6f6ee)}
+.grid{
 
-main{padding:12px}
+display:grid;
+
+gap:20px;
+
+}
 
 .card{
-  background:var(--card);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:12px;
-  box-shadow:0 1px 0 rgba(0,0,0,0.04);
+
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+
 }
 
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.actions{margin-top:8px;display:flex;gap:8px}
-.primary{background:var(--primary);color:#fff;border:0;padding:10px;border-radius:10px}
-.result{background:var(--accent);padding:10px;border-radius:8px;margin-top:8px}
-.hidden{display:none}
-.category-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.cat-row{display:flex;align-items:center;justify-content:space-between;padding:8px;background:#fbfbfb;border-radius:8px}
-.small-btn{padding:6px 8px;border-radius:8px;border:0;background:#eee}
-.horizontal{display:flex;gap:8px}
-.quick-card{min-width:180px;padding:10px;border-radius:10px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,0.04)}
-footer{padding:8px;text-align:center;color:#666;font-size:12px}
-.multi{display:flex;flex-wrap:wrap;gap:6px}
-.multi .option{background:#f1f1f1;padding:6px 8px;border-radius:8px}
-input,select,textarea{padding:8px;border-radius:8px;border:1px solid #eee;width:100%}
-textarea{min-height:80px}
-@media (max-width:600px){
-  .grid-2{grid-template-columns:1fr}
-  .quick-card{min-width:140px}
+h2{
+
+margin-top:0;
+
+}
+
+button{
+
+background:#2e7d55;
+
+color:white;
+
+border:none;
+
+padding:12px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+width:100%;
+
+margin-top:10px;
+
+}
+
+button:hover{
+
+background:#256747;
+
+}
+
+input,select{
+
+width:100%;
+
+padding:10px;
+
+margin-top:8px;
+
+margin-bottom:10px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+}
+
+#soilResult,#fertResult,#tipResult{
+
+margin-top:10px;
+
+background:#f0faf4;
+
+padding:10px;
+
+border-radius:8px;
+
+}
+
+footer{
+
+text-align:center;
+
+padding:15px;
+
+color:#777;
+
+}
+
+@media (min-width:700px){
+
+.grid{
+
+grid-template-columns:1fr 1fr;
+
+}
+
 }

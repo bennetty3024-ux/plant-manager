@@ -3,24 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plant Manager</title>
+<title>윤슬 정원 매니저</title>
+
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-<h1>🌸 Plant Manager</h1>
+<header>
+<h1>🌸 윤슬 정원 매니저</h1>
+</header>
 
-<div class="card">
-<h2>식물 등록</h2>
-<input id="plantName" placeholder="식물 이름">
-<button onclick="addPlant()">추가</button>
-</div>
+<main>
 
-<div class="card">
-<h2>내 식물</h2>
-<ul id="plantList"></ul>
-</div>
+<section class="card">
+<h2>식물 추가</h2>
+
+<select id="category">
+<option>사랑초</option>
+<option>아키메네스</option>
+<option>미니신닌기아</option>
+<option>베고니아</option>
+<option>수국</option>
+<option>구근식물</option>
+<option>팬지</option>
+<option>가든멈</option>
+<option>파종식물</option>
+</select>
+
+<input id="subCategory" placeholder="중분류 예: 사랑초파종">
+<input id="plantName" placeholder="개체 이름 예: 사랑초파종1">
+
+<button onclick="addPlant()">등록</button>
+
+</section>
+
+<section class="card">
+<h2>식물 목록</h2>
+<div id="plantList"></div>
+</section>
+
+<section class="card">
+<h2>기록</h2>
+
+<select id="actionType">
+<option>분갈이</option>
+<option>파종</option>
+<option>정식</option>
+<option>영양제</option>
+<option>메모</option>
+</select>
+
+<textarea id="note"></textarea>
+
+<button onclick="saveRecord()">기록 저장</button>
+
+</section>
+
+<section class="card">
+<h2>최근 기록</h2>
+<div id="records"></div>
+</section>
+
+</main>
 
 <script src="app.js"></script>
 

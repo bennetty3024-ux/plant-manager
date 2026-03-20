@@ -1,32 +1,7 @@
-const CACHE="yoonseul-pro";
-
-self.addEventListener("install",e=>{
-
-e.waitUntil(
-
-caches.open(CACHE).then(cache=>{
-
-return cache.addAll([
-
-"./",
-"./index.html",
-"./style.css",
-"./app.js"
-
-])
-
+self.addEventListener('install',e=>{
+self.skipWaiting()
 })
 
-)
-
-});
-
-self.addEventListener("fetch",e=>{
-
-e.respondWith(
-
-caches.match(e.request).then(r=>r||fetch(e.request))
-
-)
-
-});
+self.addEventListener('fetch',event=>{
+event.respondWith(fetch(event.request))
+})

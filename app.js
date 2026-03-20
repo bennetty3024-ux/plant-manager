@@ -1,32 +1,104 @@
-let plants = JSON.parse(localStorage.getItem("plants") || "[]");
+let plants = JSON.parse(localStorage.getItem("plants")) || []
+let records = JSON.parse(localStorage.getItem("records")) || []
 
-function render(){
-const list=document.getElementById("plantList");
-list.innerHTML="";
+function saveData(){
+localStorage.setItem("plants",JSON.stringify(plants))
+localStorage.setItem("records",JSON.stringify(records))
+}
+
+function renderPlants(){
+
+const list=document.getElementById("plantList")
+list.innerHTML=""
+
 plants.forEach((p,i)=>{
-const li=document.createElement("li");
-li.innerHTML=p+" <button onclick='removePlant("+i+")'>삭제</button>";
-list.appendChild(li);
-});
+
+const div=document.createElement("div")
+div.className="plant"
+
+div.innerHTML=`
+<b>${p.name}</b>
+<br>
+${p.category} / ${p.sub}
+<br>
+<button onclick="deletePlant(${i})">삭제</button>
+`
+
+list.appendChild(div)
+
+})
+
+}
+
+function renderRecords(){
+
+const box=document.getElementById("records")
+box.innerHTML=""
+
+records.slice().reverse().forEach(r=>{
+
+const div=document.createElement("div")
+div.className="record"
+
+div.innerHTML=`
+${r.date}
+<br>
+${r.type}
+<br>
+${r.note}
+`
+
+box.appendChild(div)
+
+})
+
 }
 
 function addPlant(){
-const name=document.getElementById("plantName").value;
-if(!name) return;
-plants.push(name);
-localStorage.setItem("plants",JSON.stringify(plants));
-document.getElementById("plantName").value="";
-render();
+
+const category=document.getElementById("category").value
+const sub=document.getElementById("subCategory").value
+const name=document.getElementById("plantName").value
+
+if(!name)return
+
+plants.push({
+category:category,
+sub:sub,
+name:name
+})
+
+saveData()
+renderPlants()
+
 }
 
-function removePlant(i){
-plants.splice(i,1);
-localStorage.setItem("plants",JSON.stringify(plants));
-render();
+function deletePlant(i){
+
+plants.splice(i,1)
+
+saveData()
+renderPlants()
+
 }
 
-render();
+function saveRecord(){
 
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
+const type=document.getElementById("actionType").value
+const note=document.getElementById("note").value
+
+records.push({
+
+type:type,
+note:note,
+date:new Date().toLocaleDateString()
+
+})
+
+saveData()
+renderRecords()
+
 }
+
+renderPlants()
+renderRecords()

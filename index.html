@@ -3,72 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>윤슬의 정원 매니저</title>
-
+<title>Plant Manager</title>
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-<header>
-<h1>🌸 윤슬의 정원 매니저</h1>
-</header>
+<h1>🌸 Plant Manager</h1>
 
-<main>
+<div class="card">
+<h2>식물 등록</h2>
+<input id="plantName" placeholder="식물 이름">
+<button onclick="addPlant()">추가</button>
+</div>
 
-<section class="card">
-<h2>🌿 식물 추가</h2>
-
-<input id="category" placeholder="대분류 (예: 사랑초)">
-<input id="group" placeholder="중분류 (예: 파종)">
-<input id="name" placeholder="식물 이름 (예: 사랑초-파종-1)">
-<input id="pot" placeholder="화분 크기 (예: 2L)">
-
-<textarea id="memo" placeholder="메모"></textarea>
-
-<button onclick="addPlant()">식물 저장</button>
-</section>
-
-
-<section class="card">
-<h2>🔍 식물 검색</h2>
-<input id="search" placeholder="검색..." oninput="renderPlants()">
-</section>
-
-
-<section class="card">
-<h2>🌱 식물 목록</h2>
-<div id="plantList"></div>
-</section>
-
-
-<section class="card">
-<h2>🪴 흙배합 계산</h2>
-
-<input id="soilSize" placeholder="화분 크기 L">
-
-<button onclick="calcSoil()">계산</button>
-
-<div id="soilResult"></div>
-
-</section>
-
-
-<section class="card">
-<h2>🧪 아그로믹파워 계산</h2>
-
-<input id="fertSize" placeholder="화분 크기 L">
-
-<button onclick="calcFertilizer()">계산</button>
-
-<div id="fertResult"></div>
-
-</section>
-
-</main>
+<div class="card">
+<h2>내 식물</h2>
+<ul id="plantList"></ul>
+</div>
 
 <script src="app.js"></script>
 

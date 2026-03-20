@@ -1,148 +1,95 @@
-const STORAGE="yoonseul_garden_pro";
-
-let data=JSON.parse(localStorage.getItem(STORAGE)) || {
-
-plants:[],
-logs:[]
-
-};
+let plants = JSON.parse(localStorage.getItem("plants") || "[]")
 
 function save(){
-
-localStorage.setItem(STORAGE,JSON.stringify(data));
-
-}
-
-function showPage(id){
-
-document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-
-document.getElementById(id).classList.remove("hidden");
-
+localStorage.setItem("plants", JSON.stringify(plants))
 }
 
 function addPlant(){
 
-const name=document.getElementById("plantName").value;
+let category=document.getElementById("category").value
+let group=document.getElementById("group").value
+let name=document.getElementById("name").value
+let pot=document.getElementById("pot").value
+let memo=document.getElementById("memo").value
 
-const type=document.getElementById("plantType").value;
+let plant={
+category,
+group,
+name,
+pot,
+memo
+}
 
-if(!name)return;
+plants.push(plant)
 
-data.plants.push({name,type});
-
-save();
-
-renderPlants();
+save()
+renderPlants()
 
 }
 
 function renderPlants(){
 
-const list=document.getElementById("plantList");
+let list=document.getElementById("plantList")
+let search=document.getElementById("search").value
 
-list.innerHTML="";
+list.innerHTML=""
 
-data.plants.forEach(p=>{
+plants
+.filter(p=>p.name.includes(search))
+.forEach((p,i)=>{
 
-const div=document.createElement("div");
+let div=document.createElement("div")
 
-div.innerHTML=p.type+" - "+p.name;
+div.className="plant"
 
-list.appendChild(div);
+div.innerHTML=`
+<b>${p.name}</b><br>
+대분류: ${p.category}<br>
+중분류: ${p.group}<br>
+화분: ${p.pot}<br>
+메모: ${p.memo}
+<button onclick="deletePlant(${i})">삭제</button>
+`
 
-});
+list.appendChild(div)
 
-updatePlantSelect();
-
-}
-
-function updatePlantSelect(){
-
-const sel=document.getElementById("logPlant");
-
-sel.innerHTML="";
-
-data.plants.forEach(p=>{
-
-const o=document.createElement("option");
-
-o.value=p.name;
-
-o.textContent=p.name;
-
-sel.appendChild(o);
-
-});
+})
 
 }
 
-function saveLog(){
+function deletePlant(i){
 
-const plant=document.getElementById("logPlant").value;
+plants.splice(i,1)
 
-const type=document.getElementById("logType").value;
+save()
 
-const memo=document.getElementById("logMemo").value;
-
-const date=new Date().toISOString().slice(0,10);
-
-data.logs.push({plant,type,memo,date});
-
-save();
-
-renderLogs();
+renderPlants()
 
 }
 
-function renderLogs(){
-
-const list=document.getElementById("logList");
-
-list.innerHTML="";
-
-data.logs.slice().reverse().forEach(l=>{
-
-const div=document.createElement("div");
-
-div.innerHTML=l.date+" | "+l.plant+" | "+l.type;
-
-list.appendChild(div);
-
-});
-
-}
 
 function calcSoil(){
 
-const plant=document.getElementById("soilPlant").value;
+let size=parseFloat(document.getElementById("soilSize").value)
 
-const size=parseFloat(document.getElementById("potSize").value);
+let soil=size*0.6
+let sand=size*0.3
+let charcoal=size*0.1
 
-const recipe={
-
-사랑초:{VanEgmond:650,산야초:250,훈탄:100},
-
-수국:{VanEgmond:600,산야초:300,훈탄:100},
-
-베고니아:{VanEgmond:500,산야초:300,질석:100,훈탄:100}
-
-};
-
-const soil=recipe[plant];
-
-let html="";
-
-Object.entries(soil).forEach(([k,v])=>{
-
-html+=k+" : "+(v*size)+" ml<br>";
-
-});
-
-document.getElementById("soilResult").innerHTML=html;
+document.getElementById("soilResult").innerHTML=`
+실내용흙 ${soil} L<br>
+산야초 ${sand} L<br>
+훈탄 ${charcoal} L
+`
 
 }
 
-renderPlants();
+function calcFertilizer(){
 
-renderLogs();
+let size=parseFloat(document.getElementById("fertSize").value)
+
+document.getElementById("fertResult").innerHTML=`${size} 알`
+}
+
+
+renderPlants()

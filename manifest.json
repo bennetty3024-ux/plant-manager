@@ -1,8 +1,8 @@
 {
-"name":"윤슬 정원 매니저",
-"short_name":"윤슬가든",
-"start_url":"./",
-"display":"standalone",
-"background_color":"#ffffff",
-"theme_color":"#2e7d55"
+"name": "윤슬의 정원 매니저",
+"short_name": "윤슬가든",
+"start_url": "index.html",
+"display": "standalone",
+"background_color": "#ffffff",
+"theme_color": "#d9b3ff"
 }
